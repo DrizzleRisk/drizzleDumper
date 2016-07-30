@@ -7,7 +7,7 @@
   
   
   
-##使用方法：
+##使用方法
 	./drizzleDumper package_name wait_times(s)
 ###更详细的使用方法可参看FreeBuf文章：
 <http://www.freebuf.com/sectool/105147.html>

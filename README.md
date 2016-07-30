@@ -1,9 +1,9 @@
 # drizzleDumper
   
-  
-  
+          
 ## 简介
-###*drizzleDumper*是一款基于内存搜索的Android脱壳工具。（####*drizzleDumper* is a memory search based Android unpacker tool.）
+###*drizzleDumper*是一款基于内存搜索的Android脱壳工具。
+######*drizzleDumper* is a memory search based Android unpacker tool.
   
   
   

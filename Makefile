@@ -11,6 +11,7 @@ build:
 
 install:
 	adb push libs/armeabi/drizzleDumper /data/local/tmp/
+	#adb push libs/x86/drizzleDumper /data/local/tmp/
 
 clean:
 	rm -rf *.c~

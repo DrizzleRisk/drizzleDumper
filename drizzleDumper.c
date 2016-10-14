@@ -10,13 +10,15 @@ int main(int argc, char *argv[]) {
   printf("[>>>]  This is drizzleDumper [<<<]\n");
   printf("[>>>]    code by Drizzle     [<<<]\n");
   printf("[>>>]        2016.05         [<<<]\n");
-  if(argc <= 1) {
+  if(argc <= 1) 
+  {
     printf("[*]  Useage : ./drizzleDumper package_name wait_times(s)\n[*]  The wait_times(s) means how long between the two Scans, default 0s  \n[*]  if successed, you can find the dex file in /data/local/tmp\n[*]  Good Luck!\n");
     return 0;
   }
 
   //Check root
-  if(getuid() != 0) {
+  if(getuid() != 0) 
+  {
     printf("[*]  Device Not root!\n");
     return -1;
   }
@@ -58,16 +60,18 @@ int main(int argc, char *argv[]) {
 
     //find cloned process
 	  clone_pid = get_clone_pid(pid);
-	  if(clone_pid <= 0) {
+	  if(clone_pid <= 0) 
+	  {
 	    continue;
 	  }
 	  printf("[*]  clone pid is %d\n", clone_pid);
 
-    memory_region memory;
-    //ptrace cloned process
-    printf("[*]  ptrace [clone_pid] %d\n", clone_pid);
-	  mem_file = attach_get_memory(clone_pid);
-	  if(mem_file == -10201) {
+          memory_region memory;
+          //ptrace cloned process
+          printf("[*]  ptrace [clone_pid] %d\n", clone_pid);
+       	  mem_file = attach_get_memory(clone_pid);
+	  if(mem_file == -10201) 
+	  {
 	    continue;
 	  }
 	  else if(mem_file == -20402)
@@ -76,30 +80,30 @@ int main(int argc, char *argv[]) {
 	  }
 	  else if(mem_file == -30903)
 	  {
-      //continue
+	     //continue
 	  }
-
-    /*
-     * Begin Scanning
-     */
+	
+	    /*
+	     * Begin Scanning
+	     */
 	  dumped_file_name = malloc(strlen(static_safe_location) + strlen(package_name) + strlen(suffix));
 	  sprintf(dumped_file_name, "%s%s%s", static_safe_location, package_name, suffix);
 	  printf("[*]  Scanning dex ...\n");
 	  if(find_magic_memory(clone_pid, mem_file, &memory, dumped_file_name) <= 0)
 	  {
 	    printf("[*]  The magic was Not Found!\n");
-      ptrace(PTRACE_DETACH, clone_pid, NULL, 0);
-      close(mem_file);
+            ptrace(PTRACE_DETACH, clone_pid, NULL, 0);
+            close(mem_file);
 	    continue;
 	  }
 	  else
 	  {
-      /*
-       * Successed & exit
-       */
-      close(mem_file);
-		  ptrace(PTRACE_DETACH, clone_pid, NULL, 0);
-		  break;
+        /*
+         * Successed & exit
+         */
+         close(mem_file);
+	 ptrace(PTRACE_DETACH, clone_pid, NULL, 0);
+	 break;
 	  }
    }
 
@@ -193,8 +197,7 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
     char mem_address_start[10]={0};
     char mem_address_end[10]={0};
     char mem_info[1024]={0};
-
-	  sscanf(mem_line, "%8[^-]-%8[^ ]%*s%*s%*s%*s%s", mem_address_start, mem_address_end,mem_info);
+    sscanf(mem_line, "%8[^-]-%8[^ ]%*s%*s%*s%*s%s", mem_address_start, mem_address_end,mem_info);
     memset(mem_line , 0 ,1024);
     uint32_t mem_start = strtoul(mem_address_start, NULL, 16);
     memory->start = mem_start;
@@ -250,9 +253,9 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
 
 	  		if(dump_memory(buffer , len , each_filename)  == 1)
 			  {
-          printf(" [+] dex dump into %s\n", each_filename);
-          free(buffer);
-          continue;
+			          printf(" [+] dex dump into %s\n", each_filename);
+			          free(buffer);
+			          continue;
 			  }
 			  else
 			  {
@@ -287,9 +290,9 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
 
 	  		if(dump_memory(buffer , len , each_filename)  == 1)
 			  {
-          printf(" [+] dex dump into %s\n", each_filename);
+                                  printf(" [+] dex dump into %s\n", each_filename);
 				  free(buffer);
-          continue;	//如果本次成功了，就不尝试其他方法了
+                                  continue;	//如果本次成功了，就不尝试其他方法了
 			  }
 			  else
 			  {

@@ -18,3 +18,7 @@ drizzleDumper <https://github.com/DrizzleRisk/drizzleDumper>
 TUnpacker <https://github.com/DrizzleRisk/TUnpacker>
 
 BUnpacker <https://github.com/DrizzleRisk/BUnpacker>
+
+##License
+	Licensed under the Apache License, Version 2.0 (the "License")
+	Some code borrowed from strazzere(https://github.com/strazzere/android-unpacker/tree/master/native-unpacker)

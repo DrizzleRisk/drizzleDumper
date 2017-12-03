@@ -41,3 +41,4 @@ drizzleDumper的原理分析和使用说明  http://blog.csdn.net/qq1084283172/a
                                     http://blog.csdn.net/p2011211616/article/details/75304095
 									
 常见app加固厂商脱壳方法研究  http://www.mottoin.com/89035.html
+fork: http://blog.csdn.net/a332324956/article/details/9114919

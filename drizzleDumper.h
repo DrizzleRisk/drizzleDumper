@@ -15,7 +15,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <linux/user.h>
+//#include <linux/user.h>
 
 #ifdef HAVE_STDINT_H
 #include <stdint.h>    /* C99 */

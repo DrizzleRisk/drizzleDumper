@@ -3,6 +3,7 @@
  * file: drizzleDumper.c
  */
 
+#include <string.h>
 #include "drizzleDumper.h"
 
 int main(int argc, char *argv[]) {
@@ -233,16 +234,21 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
 	   {
 		  char *buffer = malloc(len);
 	 	  ssize_t readlen = read(memory_fd, buffer, len);
-      printf("meminfo: %s ,len: %d ,readlen: %d, start: %x\n",mem_info, len, readlen, memory->start);
+      //printf("meminfo: %s ,len: %d ,readlen: %d, start: %x\n",mem_info, len, readlen, memory->start);
+	  
+	  
       if(buffer[1] == 'E' && buffer[2] == 'L' && buffer[3] == 'F')
       {
         free(buffer);
 
         continue;
       }
-     if(buffer[0] == 'd' && buffer[1] == 'e' && buffer[2] == 'x' && buffer[3] == '\n'  && buffer[4] == '0' && buffer[5] == '3')
+	  
+	  
+     //if(buffer[0] == 'd' && buffer[1] == 'e' && buffer[2] == 'x' && buffer[3] == '\n'  && buffer[4] == '0' && buffer[5] == '3')
+	 if(buffer[0] == 'd' && buffer[1] == 'e' && buffer[2] == 'x'  && buffer[4] == '0' && buffer[5] == '3')
       {
-			  printf(" [+] find dex, len : %d , info : %s\n" , readlen , mem_info);
+			  printf(" [+] 1find dex, len : %d , info : %s\n" , readlen , mem_info);
 			  DexHeader header;
 			  char real_lenstr[10]={0};
 			  memcpy(&header , buffer ,sizeof(DexHeader));
@@ -253,7 +259,8 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
 
 	  		if(dump_memory(buffer , len , each_filename)  == 1)
 			  {
-			          printf(" [+] dex dump into %s\n", each_filename);
+			          printf(" [+] 1dex dump into %s\n", each_filename);
+					  ret++;//liuyi,防止dump成功任然重复扫描
 			          free(buffer);
 			          continue;
 			  }
@@ -278,9 +285,10 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
 		  char *buffer = malloc(len);
 	 	  ssize_t readlen = read(memory_fd, buffer, len);
 
-		  if(buffer[0] == 'd' && buffer[1] == 'e' && buffer[2] == 'x' && buffer[3] == '\n'  && buffer[4] == '0' && buffer[5] == '3')
+		  //if(buffer[0] == 'd' && buffer[1] == 'e' && buffer[2] == 'x' && buffer[3] == '\n'  && buffer[4] == '0' && buffer[5] == '3')
+		  if(buffer[0] == 'd' && buffer[1] == 'e' && buffer[2] == 'x'  && buffer[4] == '0' && buffer[5] == '3')
 	 	  {
-			  printf(" [+] Find dex! memory len : %d \n" , readlen);
+			  printf(" [+] 2Find dex! memory len : %d \n" , readlen);
 			  DexHeader header;
 			  char real_lenstr[10]={0};
 			  memcpy(&header , buffer ,sizeof(DexHeader));
@@ -290,9 +298,10 @@ int find_magic_memory(uint32_t clone_pid, int memory_fd, memory_region *memory ,
 
 	  		if(dump_memory(buffer , len , each_filename)  == 1)
 			  {
-                                  printf(" [+] dex dump into %s\n", each_filename);
+                  printf(" [+] 2dex dump into %s\n", each_filename);
+				  ret++;//liuyi,防止dump成功任然重复扫描
 				  free(buffer);
-                                  continue;	//如果本次成功了，就不尝试其他方法了
+                  continue;	//如果本次成功了，就不尝试其他方法了
 			  }
 			  else
 			  {
